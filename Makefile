@@ -1,7 +1,7 @@
 # ----- PROJECT INFO -----
 
 PROJ_NAME := libargvp
-VER := 1.0
+VER := 1.1
 
 # ----- COMPILER CONFIGURATION -----
 

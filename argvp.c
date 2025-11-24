@@ -9,7 +9,7 @@
 Ch *get_argv_arg(Argvp *argvp, Ch opt) {
     I16 curr_opt    = 0;
     opterr          = 0;
-    optind          = 0;
+    optind          = 1;
     while ((curr_opt = 
             getopt(argvp->arg_ct, argvp->arg_vec, argvp->opt_str)) != -1) {
         if (curr_opt == opt) {
@@ -24,7 +24,7 @@ Ch *get_argv_arg(Argvp *argvp, Ch opt) {
 Bool get_argv_flag(Argvp *argvp, Ch opt) {
     I16 curr_opt    = 0;
     opterr          = 0;
-    optind          = 0;
+    optind          = 1;
     while ((curr_opt = 
             getopt(argvp->arg_ct, argvp->arg_vec, argvp->opt_str)) != -1) {
         if (curr_opt == opt)
@@ -40,7 +40,7 @@ Ch *get_argv_pos(Argvp *argvp, U16 index, Err *err) {
         return FALSE;
     }
     opterr          = 0;
-    optind          = 0;
+    optind          = 1;
     while (getopt(argvp->arg_ct, argvp->arg_vec, argvp->opt_str) != -1) {}
     return argvp->arg_vec[optind + index]; 
 }
@@ -59,7 +59,7 @@ Bool is_opt_in_argv(Argvp *argvp, Ch opt) {
 Void ld_argvp(Argvp *argvp, I16 argc, Ch **argv, Ch *optstr, Err *err) {
     I16 curr_opt    = 0;
     opterr          = 0;
-    optind          = 0;
+    optind          = 1;
     while ((curr_opt = 
             getopt(argvp->arg_ct, argvp->arg_vec, argvp->opt_str)) != -1) {
         if (curr_opt == '?') {
