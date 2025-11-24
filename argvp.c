@@ -57,9 +57,12 @@ Bool is_opt_in_argv(Argvp *argvp, Ch opt) {
 }
 
 Void ld_argvp(Argvp *argvp, I16 argc, Ch **argv, Ch *optstr, Err *err) {
-    I16 curr_opt    = 0;
-    opterr          = 0;
-    optind          = 1;
+    I16 curr_opt        = 0;
+    opterr              = 0;
+    optind              = 1;
+    argvp->arg_vec      = argv;
+    argvp->arg_ct       = argc;
+    argvp->opt_str      = optstr;
     while ((curr_opt = 
             getopt(argvp->arg_ct, argvp->arg_vec, argvp->opt_str)) != -1) {
         if (curr_opt == '?') {
@@ -67,8 +70,5 @@ Void ld_argvp(Argvp *argvp, I16 argc, Ch **argv, Ch *optstr, Err *err) {
             return;
         }
     }
-    argvp->arg_ct       = argc;
     argvp->pos_ct       = argc - optind;
-    argvp->arg_vec      = argv;
-    argvp->opt_str      = optstr;
 }
