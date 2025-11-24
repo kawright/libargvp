@@ -1,0 +1,6 @@
+[PROJECT NAME] - [PROJECT DESCRIPTION]
+
+Version Number: 1.2
+Version Date: 2025-11-24 14:02:59
+Build Number: 1
+Build Date: 2025-11-24 14:02:59
