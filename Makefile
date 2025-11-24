@@ -9,16 +9,20 @@ CC := gcc
 CC_OPTS := \
 	-Wall \
 	-Werror \
-	-fpic
+	-fpic \
+	-g
+
+CC_LIBS := \
+	-lerr
 
 # ----- REAL TARGETS -----
 
 build/lib/libargvp.so: build/obj/argvp.o
 	@mkdir -p build/lib
-	@${CC} -shared -o $@ $<
+	@${CC} -shared -o $@ $< ${CC_LIBS}
 	@echo "Built target $@"
 
-build/obj/argvp.o: argvp.c argvp.h
+build/obj/argvp.o: argvp.c argvp.h Makefile
 	@mkdir -p build/obj
 	@${CC} ${CC_OPTS} -c -o $@ $<
 	@echo "Built target $@"
