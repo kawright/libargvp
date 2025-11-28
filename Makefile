@@ -18,6 +18,14 @@ CC_LIBS := \
 
 # ----- REAL TARGETS -----
 
+.ver: build/lib/libargvp.so
+	@ver -s -n ${PROJ_NAME} -d ${PROJ_DESC}
+	@echo "Updated project metadata"
+
+.__lib__:
+	@touch .__lib__
+	@echo "Updated library marker file"
+
 build/lib/libargvp.so: build/obj/argvp.o
 	@mkdir -p build/lib
 	@${CC} -shared -o $@ $< ${CC_LIBS}
@@ -37,9 +45,7 @@ build/obj/argvp.o: argvp.c argvp.h Makefile
 	uninstall \
 	ver
 
-all: build/lib/libargvp.so
-	@ver -s -n ${PROJ_NAME} -d ${PROJ_DESC}
-	@echo "Updated project metadata"
+all: build/lib/libargvp.so .ver .__lib__
 	@echo "Built ${PROJ_NAME} version ${PROJ_VER} (build $$(ver -b))"
 
 clean:
@@ -48,21 +54,31 @@ clean:
 
 install: build/lib/libargvp.so
 	@mkdir -p /usr/local/etc/libargvp
+	
 	@cp argvp.h /usr/local/include/argvp.h
 	@echo "Copied argvp.h"
+	
 	@cp build/lib/libargvp.so /usr/local/lib/libargvp.so
 	@echo "Copied libargvp.so"
+	
 	@cp .ver /usr/local/etc/libargvp/.ver
 	@echo "Copied .ver"
+	
+	@cp .__lib__ /usr/local/etc/libargvp/.__lib__
+	@echo "Copied .__lib__"
+
 	@echo "${PROJ_NAME} version ${PROJ_VER} successfully installed"
 
 uninstall:
 	@rm /usr/local/include/argvp.h
 	@echo "Deleted argvp.h"
+
 	@rm /usr/local/lib/libargvp.so
 	@echo "Deleted libargvp.so"
+
 	@rm -rf /usr/local/etc/libargvp
 	@echo "Deleted etc files"
+
 	@echo "${PROJ_NAME} successfully uninstalled"
 
 ver:
